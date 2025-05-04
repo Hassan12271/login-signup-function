@@ -3,130 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>3D Animated Login Form</title>
+  <title>3D Sign Up Form</title>
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #74ebd5, #9face6);
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       height: 100vh;
       perspective: 1000px;
     }
 
-    .form-container {
-      background: #ffffff;
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-      width: 100%;
-      max-width: 400px;
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    .card-container {
+      width: 360px;
       transform-style: preserve-3d;
+      /* animation: rotateCard 8s infinite linear; */
     }
 
-    .form-container:hover {
-      transform: rotateY(5deg) rotateX(5deg);
-      box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4);
+    @keyframes rotateCard {
+      0% {
+        transform: rotateY(0deg);
+      }
+      100% {
+        transform: rotateY(360deg);
+      }
     }
 
-    .form-container h2 {
+    .signup-card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transition: transform 0.6s;
+      transform: rotateY(0deg);
+      backface-visibility: hidden;
+    }
+
+    .signup-card h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 20px;
       color: #333;
     }
 
-    .form-group {
-      margin-bottom: 1.2rem;
-      transform: translateZ(30px);
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: #555;
-    }
-
-    .form-group input {
+    .signup-card input[type="text"],
+    .signup-card input[type="email"],
+    .signup-card input[type="password"],
+    .signup-card input[type="file"] {
       width: 100%;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: 0.3s;
     }
 
-    .form-group input:focus {
+    .signup-card input:focus {
+      border-color: #5fa8d3;
       outline: none;
-      box-shadow: 0 0 8px #74ebd5;
       transform: scale(1.03);
     }
 
-    button {
+    .signup-card button {
       width: 100%;
-      padding: 0.75rem;
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
-      color: white;
+      padding: 12px;
       border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-    }
-    .error {
-      background: #ffe0e0;
-      color: #d60000;
-      padding: 10px;
+      background: #5fa8d3;
+      color: white;
+      font-size: 16px;
       border-radius: 8px;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-      text-align: center;
-      display: none;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    @media (max-width: 480px) {
-      .form-container {
-        padding: 1.5rem;
-        transform: none;
+    .signup-card button:hover {
+      background: #0077b6;
+      transform: scale(1.03);
+    }
+
+    #errorBox {
+      display: none;
+      background-color: #ffcccc;
+      color: red;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    @media (max-width: 400px) {
+      .card-container {
+        width: 90%;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="form-container">
-    <h2>Sign Up</h2>
-    <div class="error" id="errorBox"></div>
-    <div class="form-group">
-      <label for="user_name">Name</label>
-      <input type="text" id="user_name" name="user_name" placeholder="Enter your name">
+  <div class="card-container">
+    <div class="signup-card">
+      <h2>Sign Up</h2>
+      <div id="errorBox"></div>
+      <input type="text" id="user_name" placeholder="Your Name" />
+      <input type="email" id="user_email" placeholder="Email" />
+      <input type="password" id="user_password" placeholder="Password" />
+      <input type="file" id="user_image" accept="image/*" />
+      <button onclick="SignUp()">Submit</button>
     </div>
-    <div class="form-group">
-      <label for="user_email">Email</label>
-      <input type="email" id="user_email" name="user-email" placeholder="Enter your email">
-    </div>
-    <div class="form-group">
-      <label for="user_password">Password</label>
-      <input type="password" id="user_password" name="user-password" placeholder="Enter your password">
-    </div>
-    <button onclick="SignUp()">Sign Up</button>
-
   </div>
 
   <script src="app.js"></script>
